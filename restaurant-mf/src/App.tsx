@@ -1,22 +1,19 @@
 import logo from "./logo.svg";
 import "./App.css";
 import {
-  unstable_HistoryRouter as HistoryRouter,
   Route,
   Routes,
   useParams,
+  BrowserRouter,
 } from "react-router-dom";
-import { createBrowserHistory } from "@remix-run/router";
 
-const defaultHistory = createBrowserHistory();
-
-function App({ history = defaultHistory }) {
+function App() {
   return (
-    <HistoryRouter history={history}>
+    <BrowserRouter>
       <Routes>
         <Route path="/restaurant/:id" element={<Restaurant />} />
       </Routes>
-    </HistoryRouter>
+    </BrowserRouter>
   );
 }
 
