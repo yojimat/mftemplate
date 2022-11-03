@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes, Link, BrowserRouter } from "react-router-dom";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
 
 const { REACT_APP_CONTENT_HOST } = process.env;
 
