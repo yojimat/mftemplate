@@ -1,10 +1,9 @@
 import "./App.css";
 import {
-  createBrowserRouter,
-  createRoutesFromElements,
+  BrowserRouter,
   Navigate,
   Route,
-  RouterProvider,
+  Routes,
 } from "react-router-dom";
 import { Browser, Restaurant } from "./microFrontends";
 
@@ -14,17 +13,33 @@ const Random = () => (
   <Navigate to={`/restaurant/${getRandomRestaurantId()}`} replace />
 );
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<Browser />}>
-      <Route path="restaurant/:id" element={<Restaurant />} />
-      <Route path="random" element={<Random />} />
-    </Route>
-  )
-);
-
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/">
+          <Route index element={<Browser />} />
+          <Route path="restaurant/:id" element={<Restaurant />} />
+          <Route path="random" element={<Random />} />
+          <Route
+            path="*"
+            element={
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100vh",
+                }}
+              >
+                404 Container
+              </div>
+            }
+          />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

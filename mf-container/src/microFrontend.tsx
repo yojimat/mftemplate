@@ -1,12 +1,16 @@
 import { useEffect } from "react";
 
+const { NODE_ENV } = process.env;
+
 type MicroFrontendProps = {
   name: string;
   host: string;
 };
 
 type Manifest = {
-  "main.js": string;
+  files: {
+    "main.js": string;
+  };
 };
 
 declare global {
@@ -23,16 +27,28 @@ const MicroFrontend = ({ name, host }: MicroFrontendProps) => {
   };
 
   useEffect(() => {
+    const fetchBundleJs = () => {
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.src = `${host}/static/js/bundle.js`;
+      script.crossOrigin = "";
+      script.onload = renderMicroFrontend;
+      document.head.appendChild(script);
+    };
+
     const fetchManifestJson = async () => {
       const response = await fetch(`${host}/asset-manifest.json`);
       const manifest: Manifest = await response.json();
       const script = document.createElement("script");
       script.id = scriptId;
-      script.src = `${host}${manifest["main.js"]}`;
-      script.onload = () => renderMicroFrontend();
+      script.src = `${host}${manifest.files["main.js"]}`;
+      script.crossOrigin = "";
+      script.onload = renderMicroFrontend;
       document.head.appendChild(script);
     };
-    fetchManifestJson();
+
+    if (NODE_ENV === "development") fetchBundleJs();
+    else fetchManifestJson();
 
     return () => {
       window[`unmount${name}`](`${name}-container`);

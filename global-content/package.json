@@ -1,0 +1,12 @@
+{
+    "name": "global-content",
+    "version": "1.0.0",
+    "description": "Static content for a micro frontends demo",
+    "license": "MIT",
+    "scripts": {
+        "start": "serve --port 5000 --cors content"
+    },
+    "devDependencies": {
+        "serve": "^6.5.2"
+    }
+}

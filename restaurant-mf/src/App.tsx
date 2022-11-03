@@ -1,17 +1,28 @@
-import logo from "./logo.svg";
 import "./App.css";
-import {
-  Route,
-  Routes,
-  useParams,
-  BrowserRouter,
-} from "react-router-dom";
+import { Route, Routes, useParams, BrowserRouter } from "react-router-dom";
+
+const { REACT_APP_CONTENT_HOST } = process.env;
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/restaurant/:id" element={<Restaurant />} />
+        <Route
+          path="*"
+          element={
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100vh",
+              }}
+            >
+              404
+            </div>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
@@ -23,7 +34,7 @@ function Restaurant() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src={`${REACT_APP_CONTENT_HOST}/images/logo.svg`} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
@@ -33,7 +44,7 @@ function Restaurant() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React Restaurant {id}
+          Learn React <strong>Restaurant {id}</strong>
         </a>
       </header>
     </div>
